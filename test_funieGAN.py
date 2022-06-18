@@ -19,15 +19,17 @@ from scipy import misc
 from keras.models import model_from_json
 ## local libs
 from utils.data_utils import getPaths, read_and_resize, preprocess, deprocess
+from PIL import Image
+import imageio
 
 ## for testing arbitrary local data
-data_dir = "data/test/random/"
+data_dir = "/content/funie-gan/data/test/random/"
 from utils.data_utils import get_local_test_data
 test_paths = getPaths(data_dir)
 print ("{0} test images are loaded".format(len(test_paths)))
 
 ## create dir for log and (sampled) validation data
-samples_dir = "data/output/"
+samples_dir = "/content/funie-gan/data/Output/"
 if not os.path.exists(samples_dir): os.makedirs(samples_dir)
 
 ## test funie-gan
@@ -65,8 +67,15 @@ for img_path in test_paths:
     tot = time.time()-s
     times.append(tot)
     # save sample images
-    misc.imsave(samples_dir+img_name+'_real.png', im[0])
-    misc.imsave(samples_dir+img_name+'_gen.png', gen[0])
+    #im = deprocess(im)
+    #real = Image.fromarray(im)
+    #real.save(samples_dir+img_name+'_real4.png')
+    #gener = Image.fromarray(gen)
+    #gener.save(samples_dir+img_name+'_gen4.png')
+    imageio.imwrite(samples_dir+img_name+'_real5.png', im[0])
+    imageio.imwrite(samples_dir+img_name+'_gen5.png', gen[0])
+    #misc.imsave(samples_dir+img_name+'_real.png', im[0])
+    #misc.imsave(samples_dir+img_name+'_gen.png', gen[0])
 
 # some statistics    
 num_test = len(test_paths)
