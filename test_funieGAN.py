@@ -31,7 +31,7 @@ samples_dir = "data/output/"
 if not os.path.exists(samples_dir): os.makedirs(samples_dir)
 
 ## test funie-gan
-checkpoint_dir  = 'saved_models/gen_p/'
+checkpoint_dir  = '/content/funie-gan/saved_models/gen_p/'
 model_name_by_epoch = "model_15320_" 
 ## test funie-gan-up
 #checkpoint_dir  = 'saved_models/gen_up/'
