@@ -13,6 +13,8 @@ import random
 import fnmatch
 import numpy as np
 from scipy import misc
+from PIL import Image
+import imageio
 
 def deprocess(x):
     # [-1,1] -> [0, 255]
@@ -51,9 +53,18 @@ def getPaths(data_dir):
     return np.asarray(image_paths)
 
 def read_and_resize(path, img_res):
-    img = misc.imread(path, mode='RGB').astype(np.float)  
-    img = misc.imresize(img, img_res)
-    return img
+  #image = Image.open(path)
+  #img = image.resize(img_res)
+  #imgArray = np.array(img)
+
+
+    #img = misc.imread(path, mode='RGB').astype(np.float)  
+  img = imageio.imread(path)
+  im = Image.fromarray((img))
+    #img = misc.imresize(img, img_res)
+  imgArray = np.array(im.resize(img_res))
+  img = imgArray.astype(np.float)
+  return img
 
 def read_and_resize_pair(pathA, pathB, img_res):
     img_A = misc.imread(pathA, mode='RGB').astype(np.float)  
