@@ -21,6 +21,7 @@ from keras.models import model_from_json
 from utils.data_utils import getPaths, read_and_resize, preprocess, deprocess
 from PIL import Image
 import imageio
+import cv2
 
 ## for testing arbitrary local data
 data_dir = "/content/funie-gan/data/test/random/"
@@ -33,11 +34,11 @@ samples_dir = "/content/funie-gan/data/Output/"
 if not os.path.exists(samples_dir): os.makedirs(samples_dir)
 
 ## test funie-gan
-checkpoint_dir  = '/content/funie-gan/saved_models/gen_p/'
-model_name_by_epoch = "model_15320_" 
+#checkpoint_dir  = '/content/funie-gan/saved_models/gen_p/'
+#model_name_by_epoch = "model_15320_" 
 ## test funie-gan-up
-#checkpoint_dir  = 'saved_models/gen_up/'
-#model_name_by_epoch = "model_35442_" 
+checkpoint_dir  = '/content/funie-gan/saved_models/gen_up/'
+model_name_by_epoch = "model_35442_" 
 
 model_h5 = checkpoint_dir + model_name_by_epoch + ".h5"  
 model_json = checkpoint_dir + model_name_by_epoch + ".json"
@@ -72,8 +73,13 @@ for img_path in test_paths:
     #real.save(samples_dir+img_name+'_real4.png')
     #gener = Image.fromarray(gen)
     #gener.save(samples_dir+img_name+'_gen4.png')
-    imageio.imwrite(samples_dir+img_name+'_real5.png', im[0])
-    imageio.imwrite(samples_dir+img_name+'_gen5.png', gen[0])
+    im = cv2.normalize(im, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8U)
+    imageio.imwrite(samples_dir+img_name+'_real4.png', im[0])
+    #Normalizing
+    #Could try gen[0]
+    #gen = gen.astype(np.uint8)
+    gen = cv2.normalize(gen, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8U)
+    imageio.imwrite(samples_dir+img_name+'_gen.png', gen[0])
     #misc.imsave(samples_dir+img_name+'_real.png', im[0])
     #misc.imsave(samples_dir+img_name+'_gen.png', gen[0])
 
